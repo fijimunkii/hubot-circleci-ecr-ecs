@@ -1,0 +1,20 @@
+machine:
+  services:
+    - docker
+  environment:
+    DOCKER_IMAGE: $CIRCLE_PROJECT_USERNAME/hubot
+    DOCKER_TAG: $CIRCLE_BRANCH-$CIRCLE_SHA1
+
+dependencies:
+  override:
+    - cd hubot && ./build.sh
+
+test:
+  override:
+    - exit 0
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - cd hubot && ./deploy.sh
